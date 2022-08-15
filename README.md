@@ -1,4 +1,4 @@
-# expense_app_gui
+## Expense App
 
 A Flutter project.
 
