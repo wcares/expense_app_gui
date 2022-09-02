@@ -19,16 +19,17 @@ class _NewTransactionState extends State<NewTransaction> {
   DateTime _selectedDate = DateTime.now();
 
   void _submitData() {
+    if (_amountController.text.isEmpty) {
+      return;
+    }
     final enteredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
-    widget.addTx(
-      _titleController.text,
-      double.parse(_amountController.text),
-    );
+    widget.addTx(_titleController.text, double.parse(_amountController.text),
+        _selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -40,14 +41,13 @@ class _NewTransactionState extends State<NewTransaction> {
       firstDate: DateTime(2022),
       lastDate: DateTime.now(),
     ).then((pickedDate) {
-      if (pickedDate == null) {
-        return;
-      }
+      // if (pickedDate == null) {
+      //   return;
+      // }
       setState(() {
-        _selectedDate = pickedDate;
+        _selectedDate = pickedDate!;
       });
     });
-    print("...");
   }
 
   @override
@@ -79,9 +79,8 @@ class _NewTransactionState extends State<NewTransaction> {
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                      child: Text(_selectedDate == null
-                          ? "No Date Chosen"
-                          : "Picked Date: ${DateFormat.yMd().format(_selectedDate)}"),
+                      child: Text(
+                          "Picked Date: ${DateFormat.yMd().format(_selectedDate)}"),
                     ),
                     FlatButton(
                       textColor: Theme.of(context).primaryColor,
