@@ -1,5 +1,7 @@
 import 'dart:ffi';
-
+import 'dart:io';
+import 'package:expense_app_gui/widgets/adaptive_flat_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -88,19 +90,27 @@ class _NewTransactionState extends State<NewTransaction> {
                         child: Text(
                             "Picked Date: ${DateFormat.yMd().format(_selectedDate)}"),
                       ),
-                      TextButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                        ),
-                        onPressed: _presentDatePicker,
-                        child: Text(
-                          "Choose Date",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      Platform.isIOS
+                          ? CupertinoButton(
+                              child: Text(
+                                "Choose Date",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: _presentDatePicker)
+                          : TextButton(
+                              style: ButtonStyle(
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue),
+                              ),
+                              onPressed: _presentDatePicker,
+                              child: Text(
+                                "Choose Date",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
                     ],
                   ),
                 ),
@@ -109,7 +119,7 @@ class _NewTransactionState extends State<NewTransaction> {
                   style: ElevatedButton.styleFrom(onSurface: Colors.blue),
                   child: Text("Add Transaction"),
                   //textColor: Theme.of(context).backgroundColor,
-                ),
+                )
               ]),
         ),
       ),
