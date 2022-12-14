@@ -104,9 +104,9 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
         context: ctx,
         builder: (context) {
           return GestureDetector(
-            child: NewTransaction(_addNewTransaction),
             onTap: () {},
             behavior: HitTestBehavior.opaque,
+            child: NewTransaction(_addNewTransaction),
           );
         });
   }
